@@ -5,7 +5,7 @@ function CreateNewToDo(){
 
     return(
         <div className="CreateNewToDo">
-            add new todo
+            <button></button>
         </div>
     )
 }

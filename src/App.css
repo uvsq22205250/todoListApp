@@ -55,6 +55,7 @@
 }
 .Modal .container {
     position: absolute;
+    border-radius: 2%;
     top: 30%;
     left: 50%;
     transform: translate(-50%, -25%);
@@ -63,3 +64,95 @@
     width: 50vh;
 
 }
+.Modal .text .headerAddTodo {
+    display: flex;
+    justify-content: space-between;
+}
+
+.Modal .text .headerAddTodo .cancelAddTodo:hover {
+    border-bottom: #96B6D8 solid;
+    border-radius: 10%;
+    cursor: pointer;
+}
+
+.Modal .boutonAddTodo {
+    position: absolute;
+    margin-bottom: 2px;
+}
+
+/*Fenetre d'affichage todos*/
+.Todos {
+    width: 450px;
+    height: 80%;
+    margin-left: 50px;
+    margin-top: 80px;
+    border-radius: 1%;
+    
+    background-color: #B9D4F0;
+}
+.Todos .selectedProject {
+    font-weight: bold;
+    font-size: 25px;
+    margin-left: 10px;
+    margin-right: 10px;
+    border-bottom: solid 1px #DDDDDD;
+}
+
+
+
+/*une Todo*/
+.todo {
+    padding: 0.5rem 1rem;
+}
+.todo .todo-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+}
+.todo .todo-container:hover {
+    border-radius: 5%;
+    border-bottom: solid #96B6D8 ;
+    border-left: solid #96B6D8 ;
+}
+
+.todo .todo-container .todo-action {
+    display: flex;
+    align-items: center;
+}
+
+.todo .todo-container .todo-items {
+    display: flex;
+   
+    justify-content: space-between;
+}
+
+
+.todo .todo-container .todo-text {
+    position: relative;
+    cursor: pointer;
+    margin: 0 10px;
+}
+
+.todo .todo-container .todo-text p {
+    margin-bottom: 0;
+}
+
+.todo .todo-container .todo-text .line {
+    height: 1px;
+    background-color: black;
+    position: absolute;
+    top: 25%;
+    width: 0;
+    transition: width 250ms ease-in-out;
+}
+.todo .todo-container .todo-text .line-checked {
+    width: 100%;
+}
+
+.todo .todo-container .todo-action .trashIcon {
+    cursor: pointer;
+}
+
+
+

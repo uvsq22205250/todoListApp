@@ -154,5 +154,50 @@
     cursor: pointer;
 }
 
+.CreateNewToDo form {
+    position: relative;
+    padding: 1rem;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.CreateNewToDo form .text input {
+padding: 1rem;
+width: 100%;
+margin-bottom: 0.5rem;
+margin-top: 1rem;
+border: none;
+font-size: 1.2rem;
+}
+
+.CreateNewToDo form p {
+    margin-left: 10px;
+    margin-bottom: 0%;
+    
+}
+.CreateNewToDo form .WhatDay .title {
+    margin-top: 15px;
+    margin-bottom: 2px;
+    display: flex;
+    align-items: center;
+} 
+
+.CreateNewToDo form .WhatTime .title {
+    margin-top: 15px;
+    margin-bottom: 2px;
+    display: flex;
+    align-items: center;
+} 
+
+.CreateNewToDo form .boutonAddTodo {
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    
+}
+
 
 

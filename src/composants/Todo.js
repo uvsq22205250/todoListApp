@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { CheckCircleFill, Circle } from 'react-bootstrap-icons';
 import { Trash } from 'react-bootstrap-icons';
 
+
 function Todo({todo}){
     const [hover, setHover] = useState(false); //state qui définit si la sourit est dessus ou pas 
 

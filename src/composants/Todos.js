@@ -11,7 +11,7 @@ function Todos(){
             text: "Play league of legend",
             time: "10:00",
             date: "03/04/2023",
-            checked: true,
+            checked: false,
             project: 'personnal'
         },
         {

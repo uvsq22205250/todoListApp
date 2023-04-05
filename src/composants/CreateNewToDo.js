@@ -1,7 +1,12 @@
 import React, { useState } from 'react'
 import Modal from './Model';
-import { Bell, CalendarDay, X } from 'react-bootstrap-icons';
-/*import {DatePicker, TimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';*/
+import {Clock, Bell, CalendarDay, X } from 'react-bootstrap-icons';
+import { LocalizationProvider, TimePicker } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
+import { DatePicker } from '@mui/x-date-pickers';
+import { StaticTimePicker } from '@mui/x-date-pickers';
+
+
 
 
 
@@ -10,6 +15,7 @@ function CreateNewToDo(){
     const [showModal, setShowModal] = useState(false) //showModal = false, setShowModal() pour le modifier
     const [text, setText] = useState('') //pour changer la value de l'input
     const [date, setDate] = useState(new Date())
+    const [time, setTime] = useState(new Date())
 
     return(
         <div className="CreateNewToDo">
@@ -37,10 +43,29 @@ function CreateNewToDo(){
                     </div>
 
                     <div className='WhatDay'>
-                        <CalendarDay />
-                        <p>choose a day</p>
-                        
+                    <div className='title'>
+                    <CalendarDay />
+                    <p>choose a day</p>
+                    </div>
+                    <LocalizationProvider dateAdapter={AdapterDateFns}> 
+                         <DatePicker 
+                            value = {date}
+                            onChange={date => setDate(date)} />
+                    </LocalizationProvider>
+                    </div>
 
+                    <div className='WhatTime'>
+                    
+                    <div className='title'>
+                    <Clock />
+                    <p>choose a time</p>
+                    </div>
+                    
+                    <LocalizationProvider dateAdapter={AdapterDateFns}> 
+                         <TimePicker 
+                           value = {time}
+                           onChange={time => setTime(time)} />
+                    </LocalizationProvider>
                     </div>
 
                     <div className='boutonAddTodo '>

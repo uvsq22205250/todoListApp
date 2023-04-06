@@ -1,0 +1,38 @@
+body{
+
+    
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.content{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    
+}
+
+.content_image{
+    background: url(../src/images/164.png) no-repeat center center;
+	background-size: cover;
+    width: 50%;
+    height: 100%;
+    
+}
+
+.content_text{
+    background-color: rgb(243, 250, 250);
+    font-family: 'Times New Roman', Times, serif;
+    font-size: medium;
+    width: 50%;
+    height: 100%;
+    overflow-y: scroll;
+}
+
+.img{
+    margin-top: 10px;
+    margin: 0px 0px ;
+    width: 2em;
+    height: 2em;
+}

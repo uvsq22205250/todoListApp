@@ -10,12 +10,37 @@
     display: flex;
     width : 100vw;
     height: 100vh;
-    overflow: hidden;
+   /* overflow: hidden;*/
 }
 .SideBar{
     width: 15em;
     background-color :#B9D4F0;
 }
+.Footer{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 5em;
+    background-color: rgb(238, 231, 238);
+    color: rgb(0, 0, 0);
+    text-align: center;
+    text-align:center;
+    display: flex;
+    flex-direction: column;
+}
+
+.Footer .list-inline{
+    color: rgb(0, 0, 0);
+
+}
+
+.Footer .copyright {
+   text-align:center;
+   font-size:13px;
+   color:#aaa;
+}
+
 .Main{
     background-color: #F0F2F5 ;
     width : 100%;

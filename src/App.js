@@ -8,6 +8,7 @@ import Calendar from './composants/Calendar'
 import Projets from './composants/Projets'
 import UpdateToDo from './composants/UpdateToDo'
 import Todos from './composants/Todos'
+import Footer from './composants/footer';
 
 
 
@@ -25,6 +26,9 @@ function App() {
       <Main>
             <Todos />
             <UpdateToDo />
+            <Footer>
+              <p> Footer </p>
+            </Footer>
 
       </Main>
     </div>

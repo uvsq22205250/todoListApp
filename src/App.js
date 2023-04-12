@@ -1,19 +1,13 @@
 import { Container, CssBaseline, Grid, makeStyles, Paper, Typography } from "@material-ui/core";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AddTaskForm from "./Components/AddTaskForm";
 import EditTodo from "./Components/EditTodo";
 import Tasks from "./Components/Tasks";
-import CreateNewTodo from "./Components/CreateNewTodo";
 import ResponsiveAppBar from "./Components/ResponsiveAppBar.jsx";
 import Button from '@material-ui/core/Button';
 
-
-import SideBar from './Components/SideBar'
-import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
-
-
-
-
+import db from './firebase.config';
+import { doc, getDocs, onSnapshot, collection, query } from "firebase/firestore";
 
 function App() {
  
@@ -33,6 +27,35 @@ function App() {
   const [Todo, setTodo] = useState([])
 
   const [sort, setSort] = useState('All')
+
+  //const [tasks, setTasks] = useState([])
+
+  const fetchTasks = async() => {
+    const response = query(collection(db, "task"));
+    const data = await getDocs(response);
+    
+    if (data.size>0) {
+      data.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        console.log(doc.id, " => ", doc.data());
+        setTodo([...Todo, doc.data()])
+      });
+
+    } else {
+      // docSnap.data() will be undefined in this case
+      console.log("No such document!");
+    }
+  }
+  useEffect(() => {
+    fetchTasks();
+  }, [])
+
+  /*useEffect(() => {
+    const q = query(collection(db, "task"))
+    const unsub = onSnapshot(q, (querySnapshot) => {
+      console.log("Data", querySnapshot.docs.map(d => doc.data()));
+    });
+  }, [])*/
 
   let toDo = []
 
@@ -117,12 +140,9 @@ function App() {
 
 
   return (
-
-    
     <>
-    <ResponsiveAppBar></ResponsiveAppBar>
+      <ResponsiveAppBar> </ResponsiveAppBar>
 
-      
       <Container component="main" maxWidth="lg">
       
         <CssBaseline>
@@ -131,14 +151,11 @@ function App() {
               {showGrid && (
                 <Grid lg={4} sm={12} xs={12} item  className={ showAnimation ? classes.fadeIn: ""} >
                 
-                <AddTaskForm addTodo={addTodo} />
+                 <AddTaskForm addTodo={addTodo} />
                
-                <Typography className={classes.noteTypo + ' ' + classes.hideCaption} variant="caption" >Double Click On Todo To Toggle Reminder</Typography>
-              </Grid>
+                 <Typography className={classes.noteTypo + ' ' + classes.hideCaption} variant="caption" >Double Click On Todo To Toggle Reminder</Typography>
+                </Grid>
               )}
-              
-
-            
               <Grid lg={gridLg} sm={12} xs={12} item>
               
                 <EditTodo
@@ -161,10 +178,8 @@ function App() {
                  />
               </Grid>
               <Grid item>
-        <Button variant="contained" color="primary" onClick={handleButtonClick}>
-          tools
-        </Button>
-      </Grid>
+                <Button variant="contained" color="primary" onClick={handleButtonClick}> tools </Button>
+              </Grid>
             </Grid>
           </Paper>
         </CssBaseline>

@@ -55,7 +55,8 @@ const AddTaskForm = ({addTodo}) => {
                    <Typography className={classes.h5} variant='h5'>Add Todo</Typography>
                </Grid>
                <Grid item>
-                   <TextField onChange={(e) => setName(e.target.value)} value={name} className={classes.widthStrech} label="Todo" placeholder="ex : Workout 30 minutes" variant="filled" />
+                   <TextField onChange={(e) => setName(e.target.value)} 
+                   value={name} className={classes.widthStrech} label="Todo" placeholder="ex : Workout 30 minutes" variant="filled" />
                </Grid>
                <Grid item>
                    <TextField 

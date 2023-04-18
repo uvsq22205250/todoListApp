@@ -5,9 +5,8 @@ import EditTodo from "./Components/EditTodo";
 import Tasks from "./Components/Tasks";
 import ResponsiveAppBar from "./Components/ResponsiveAppBar.jsx";
 import Button from '@material-ui/core/Button';
-
 import db from './firebase.config';
-import { doc, getDocs, onSnapshot, collection, query } from "firebase/firestore";
+import { onSnapshot } from "firebase/firestore";
 
 function App() {
  
@@ -18,6 +17,7 @@ function App() {
       setOpenEdit(true)
       setEditValue(obj.name)
       setEditableObjct(obj)
+      db.updateTodo(obj)
   }
 
   const [showGrid, setShowGrid] = useState(false);
@@ -28,8 +28,9 @@ function App() {
 
   const [sort, setSort] = useState('All')
 
-  //const [tasks, setTasks] = useState([])
+  const [loading, setLoading] = useState(true)
 
+  /*
   const fetchTasks = async() => {
     const response = query(collection(db, "task"));
     const data = await getDocs(response);
@@ -49,13 +50,24 @@ function App() {
   useEffect(() => {
     fetchTasks();
   }, [])
+  */
 
-  /*useEffect(() => {
-    const q = query(collection(db, "task"))
-    const unsub = onSnapshot(q, (querySnapshot) => {
-      console.log("Data", querySnapshot.docs.map(d => doc.data()));
-    });
-  }, [])*/
+  useEffect(() => {
+    const loadTodos = () => onSnapshot(db.todos(), (query) => {
+        const list = []
+          query.forEach(doc => {
+            const { tache } = doc.data()
+              list.push({
+                id: doc.id,
+                  tache
+              })
+          })
+          setTodo(list)
+          setLoading(false)
+        }
+      )
+        loadTodos()
+    }, [])
 
   let toDo = []
 
@@ -71,8 +83,6 @@ function App() {
       setShowAnimation(false);
     }, 500);
   };
-
-  
   
   if(sort === 'All') toDo = Todo;
   else if (sort === 'Doing') toDo = Todo.filter(todo => !todo.completed);
@@ -80,12 +90,16 @@ function App() {
 
   const deleteTodo = (id) => {
     setTodo(Todo.filter((todo) => todo.id!==id))
+    db.deleteTodo(id)
   }
+
   const addTodo = (newTodoData) => {
     const id = Math.floor(Math.random() * 1000)
     const newTodo = {id, ...newTodoData}
     setTodo([...Todo, newTodo])
+    db.addTodos(newTodo)
   }
+
   const completeTodo = (id) => {
     setTodo(Todo.map(todo => todo.id===id ? {...todo, completed: true} : todo))
   }

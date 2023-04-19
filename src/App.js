@@ -100,10 +100,12 @@ function App() {
 
   const completeTodo = (id) => {
     setTodo(Todo.map(todo => todo.id===id ? {...todo, completed: true} : todo))
+    Todo.map(todo => todo.id===id ? db.completedTodo(id) : todo)
   }
 
   const setReminder = (id) => {
     setTodo(Todo.map(todo => todo.id===id ? {...todo, reminder: !todo.reminder} : todo))
+    Todo.map(todo => todo.id===id ? db.reminderTodo(id) : todo)
   }
 
 

@@ -16,7 +16,7 @@ const EditTodo = ({openEdit, editValue, setEditValue, setOpenEdit,Todo , setTodo
         setOpenEdit(false)
         setTodo(Todo.map((todo) => todo.id===editableObjct.id ? { ...todo, name: editValue} : todo))
        // setTodo(Todo.map((todo) => todo.id===editableObjct.id ? db.updateTodo(todo.id, editableObjct) : todo)) 
-        Todo.map((todo) => todo.id===editableObjct.id ? db.updateTodo(todo.id, editableObjct) : todo)
+        Todo.map((todo) => todo.id===editableObjct.id ? db.updateTodo(todo.id, editValue) : todo)
     }
     const handleCloseDialog = () => {
         setOpenEdit(false)

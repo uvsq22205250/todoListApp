@@ -40,13 +40,23 @@ const Firebase = {
   },
   updateTodo: async (id, tache) => {
     const todo = doc(db, 'todos', id);
-    console.log(todo)
-    return await updateDoc(todo, tache);
+    const updateFields = { name : tache };
+    return await updateDoc(todo, updateFields);
   },
   deleteTodo: async (id) => {
     //const todo = getDoc(collection(db, 'todos', id))
     const todo = doc(db, 'todos', id)
     return await deleteDoc(todo);
+  },
+  completedTodo: async (id) => {
+    const todo = doc(db, 'todos', id);
+    const updateFields = { completed : true };
+    return await updateDoc(todo, updateFields);
+  },
+  reminderTodo: async (id) => {
+    const todo = doc(db, 'todos', id);
+    const updateFields = { reminder : true };
+    return await updateDoc(todo, updateFields);
   }
 }
 

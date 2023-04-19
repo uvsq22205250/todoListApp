@@ -2,6 +2,7 @@
 import { Button, Dialog, DialogContent, DialogTitle, Grid, makeStyles, Snackbar, TextField, useMediaQuery } from '@material-ui/core'
 import { useTheme } from '@material-ui/core/styles'
 import React, { useState } from 'react'
+import db from '../firebase.config'
 
 const EditTodo = ({openEdit, editValue, setEditValue, setOpenEdit,Todo , setTodo, editableObjct}) => {
     const [SnackBar, setSnackBar] = useState(false)
@@ -14,6 +15,8 @@ const EditTodo = ({openEdit, editValue, setEditValue, setOpenEdit,Todo , setTodo
         }
         setOpenEdit(false)
         setTodo(Todo.map((todo) => todo.id===editableObjct.id ? { ...todo, name: editValue} : todo))
+       // setTodo(Todo.map((todo) => todo.id===editableObjct.id ? db.updateTodo(todo.id, editableObjct) : todo)) 
+        Todo.map((todo) => todo.id===editableObjct.id ? db.updateTodo(todo.id, editableObjct) : todo)
     }
     const handleCloseDialog = () => {
         setOpenEdit(false)

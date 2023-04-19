@@ -17,7 +17,6 @@ function App() {
       setOpenEdit(true)
       setEditValue(obj.name)
       setEditableObjct(obj)
-      db.updateTodo(obj)
   }
 
   const [showGrid, setShowGrid] = useState(false);
@@ -56,11 +55,10 @@ function App() {
     const loadTodos = () => onSnapshot(db.todos(), (query) => {
         const list = []
           query.forEach(doc => {
-            const { tache } = doc.data()
-              list.push({
-                id: doc.id,
-                  tache
-              })
+            const  tache  = doc.data()
+            const id = doc.id;
+            const newTodo = {id, ...tache}
+              list.push(newTodo)
           })
           setTodo(list)
           setLoading(false)

@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { collection, query, doc, setDoc, addDoc, getFirestore, deleteDoc } from "firebase/firestore";
+import { collection, query, doc, getDoc, setDoc, addDoc, getFirestore, deleteDoc, updateDoc } from "firebase/firestore";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -38,17 +38,15 @@ const Firebase = {
         completed: tache.completed
       });
   },
-  updateTodo: async (tache) => {
-    return await setDoc(collection(db, 'todos', tache.id), { 
-      name: tache.name,
-      date: tache.date,
-      reminder: tache.reminder,
-      completed: tache.completed
-    });
-
+  updateTodo: async (id, tache) => {
+    const todo = doc(db, 'todos', id);
+    console.log(todo)
+    return await updateDoc(todo, tache);
   },
   deleteTodo: async (id) => {
-    return await deleteDoc(collection(db, 'todos', id));
+    //const todo = getDoc(collection(db, 'todos', id))
+    const todo = doc(db, 'todos', id)
+    return await deleteDoc(todo);
   }
 }
 

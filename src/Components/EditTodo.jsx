@@ -2,7 +2,7 @@
 import { Button, Dialog, DialogContent, DialogTitle, Grid, makeStyles, Snackbar, TextField, useMediaQuery } from '@material-ui/core'
 import { useTheme } from '@material-ui/core/styles'
 import React, { useState } from 'react'
-import db from '../firebase.config'
+import db from '../configCRUD';
 
 const EditTodo = ({openEdit, editValue, setEditValue, setOpenEdit,Todo , setTodo, editableObjct}) => {
     const [SnackBar, setSnackBar] = useState(false)

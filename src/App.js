@@ -5,7 +5,7 @@ import EditTodo from "./Components/EditTodo";
 import Tasks from "./Components/Tasks";
 import ResponsiveAppBar from "./Components/ResponsiveAppBar.jsx";
 import Button from '@material-ui/core/Button';
-import db from './firebase.config';
+import db from './configCRUD';
 import { onSnapshot } from "firebase/firestore";
 
 function App() {

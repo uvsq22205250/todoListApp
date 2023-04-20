@@ -1,5 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
 import { collection, query, doc, getDoc, setDoc, addDoc, getFirestore, deleteDoc, updateDoc } from "firebase/firestore";
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -19,6 +20,8 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+
+/*
 const db = getFirestore(app);
 
 const Firebase = {
@@ -59,5 +62,8 @@ const Firebase = {
     return await updateDoc(todo, updateFields);
   }
 }
+*/
 
-export default Firebase
+export const auth = getAuth(app);
+export default app
+

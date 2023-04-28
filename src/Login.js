@@ -16,6 +16,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import * as Yup from 'yup';
 
 function Copyright() {
   return (
@@ -48,6 +49,31 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  textFieldIsEmpty: {
+    '& label.Mui-focused': {
+      color: 'red',
+    },
+    '& .MuiInput-underline:after': {
+      borderBottomColor: 'red',
+    },
+    '& .MuiInputLabel-root': {
+      color: 'red',
+    },
+    '& .MuiOutlinedInput-input': {
+      color: 'red',
+    },
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        borderColor: 'red',
+      },
+      '&:hover fieldset': {
+        borderColor: 'red',
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: 'red',
+      },
+    }
+  },
 }));
  
 const Login = () => {
@@ -55,21 +81,34 @@ const Login = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [textFieldIsEmpty, setTextFieldIsEmpty] = useState(false);
+    const [textFieldIsEmptyMDP, setTextFieldIsEmptyMDP] = useState(false);
        
+
+    const schema = Yup.object().shape({
+      email: Yup.string()
+        .email('L\'adresse e-mail doit être valide')
+        .required('L\'adresse e-mail est requise'),
+      password: Yup.string()
+        .min(6, 'Le mot de passe doit contenir au moins 6 caractères')
+        .required('Le mot de passe est requis'),
+    });
+
     const onLogin = (e) => {
         e.preventDefault();
+        schema.validate({email, password}, { abortEarly: false }).then(() => {
         signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             // Signed in
             const user = userCredential.user;
-            navigate("App")
+            navigate("/App")
             console.log(user);
         })
         .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
             console.log(errorCode, errorMessage)
-        });
+        }); })
        
     }
  
@@ -86,7 +125,8 @@ const Login = () => {
                 </Typography>
                 <form className={classes.form} noValidate>
                     <TextField
-                        variant="outlined"
+                        className={textFieldIsEmpty ? classes.textFieldIsEmpty : ''}
+                        variant="filled"
                         margin="normal"
                         required
                          fullWidth
@@ -95,10 +135,14 @@ const Login = () => {
                         name="email"
                         autoComplete="email"
                         autoFocus
-                        onChange={(e)=>setEmail(e.target.value)}
+                        onChange={(e)=>{
+                          setEmail(e.target.value) 
+                          setTextFieldIsEmpty(e.target.value.trim() === '');
+                        }}
                     />
                     <TextField
-                        variant="outlined"
+                        className={textFieldIsEmptyMDP ? classes.textFieldIsEmpty : ''}
+                        variant="filled"
                         margin="normal"
                         required
                         fullWidth
@@ -107,7 +151,10 @@ const Login = () => {
                         type="password"
                         id="password"
                         autoComplete="current-password"
-                        onChange={(e)=>setPassword(e.target.value)}
+                        onChange={(e)=>{
+                          setPassword(e.target.value) 
+                          setTextFieldIsEmptyMDP(e.target.value.trim() === '');
+                        }}
                     />
                     <FormControlLabel
                         control={<Checkbox value="remember" color="primary" />}
@@ -130,12 +177,11 @@ const Login = () => {
                             </Link>
                         </Grid>
                         <Grid item>
-                            <Link href="#" variant="body2">
-                                {"Don't have an account? "}
+                          
                                 <NavLink to="/Signup">
-                                    Sign up
+                                Don't have an account?  Sign up
                                 </NavLink>
-                            </Link>
+                            
                         </Grid>
                     </Grid>
                 </form>

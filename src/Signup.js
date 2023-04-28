@@ -15,6 +15,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import * as Yup from 'yup';
 
 function Copyright() {
   return (
@@ -56,9 +57,19 @@ const Signup = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('');
  
+
+    const schema = Yup.object().shape({
+      email: Yup.string()
+        .email('L\'adresse e-mail doit être valide')
+        .required('L\'adresse e-mail est requise'),
+      password: Yup.string()
+        .min(6, 'Le mot de passe doit contenir au moins 6 caractères')
+        .required('Le mot de passe est requis'),
+    });
+
     const onSubmit = async (e) => {
       e.preventDefault()
-     
+      schema.validate({email, password}, { abortEarly: false }).then(() => async () => {
       await createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             // Signed in
@@ -73,6 +84,7 @@ const Signup = () => {
             console.log(errorCode, errorMessage);
             // ..
         });
+      })
  
    
     }
@@ -93,7 +105,7 @@ const Signup = () => {
               <TextField
                 autoComplete="fname"
                 name="firstName"
-                variant="outlined"
+                variant="filled"
                 required
                 fullWidth
                 id="firstName"
@@ -103,7 +115,7 @@ const Signup = () => {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
-                variant="outlined"
+                variant="filled"
                 required
                 fullWidth
                 id="lastName"
@@ -114,7 +126,7 @@ const Signup = () => {
             </Grid>
             <Grid item xs={12}>
               <TextField
-                variant="outlined"
+                variant="filled"
                 required
                 fullWidth
                 id="email"
@@ -126,7 +138,7 @@ const Signup = () => {
             </Grid>
             <Grid item xs={12}>
               <TextField
-                variant="outlined"
+                variant="filled"
                 required
                 fullWidth
                 name="password"
@@ -156,12 +168,11 @@ const Signup = () => {
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link href="#" variant="body2">
-                Already have an account?
+              
                 <NavLink to="/Login" >
-                    Sign in
+                Already have an account? Sign in
                 </NavLink>
-              </Link>
+              
             </Grid>
           </Grid>
         </form>

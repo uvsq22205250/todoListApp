@@ -7,9 +7,47 @@ import ResponsiveAppBar from "./Components/ResponsiveAppBar.jsx";
 import Button from '@material-ui/core/Button';
 import db from './configCRUD';
 import { onSnapshot } from "firebase/firestore";
+import app from './firebase.config';
+import { getAuth } from "firebase/auth";
+
+
 
 function App() {
- 
+
+  const auth = getAuth(app);
+  const user = auth.currentUser;
+    if (user !== null) {
+      // L'utilisateur est connecté, vous pouvez récupérer ses données ici
+      const uid = user.uid;
+      const email = user.email;
+      // etc...
+
+ /*
+  const [currentUser, setCurrentUser] = useState(null);
+
+  const auth = getAuth();
+  const user = auth.currentUser
+  console.log(user)
+  setCurrentUser(user);
+
+  
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        setCurrentUser(user);
+      } else {
+        setCurrentUser(null);
+      }
+    });
+    //return unsubscribe;
+    unsubscribe();
+  }, []);
+  
+  */
+
+  // Afficher les informations de l'utilisateur actuellement connecté
+  //const { uid, email } = currentUser;
+
   const [openEdit, setOpenEdit] = useState(false)
   const [editValue, setEditValue] = useState('')
   const [editableObjct, setEditableObjct] = useState({})
@@ -58,7 +96,9 @@ function App() {
             const  tache  = doc.data()
             const id = doc.id;
             const newTodo = {id, ...tache}
+            if(newTodo.userId == uid){
               list.push(newTodo)
+            }
           })
           setTodo(list)
           setLoading(false)
@@ -95,7 +135,7 @@ function App() {
     const id = Math.floor(Math.random() * 1000)
     const newTodo = {id, ...newTodoData}
     setTodo([...Todo, newTodo])
-    db.addTodos(newTodo)
+    db.addTodos(newTodo, uid)
   }
 
   const completeTodo = (id) => {
@@ -201,6 +241,13 @@ function App() {
       
     </>
   );
+
+} else {
+  console.log("Echec auth")
+  return <h1>Bienvenue sur mon site!</h1>;
+  // L'utilisateur n'est pas connecté, vous pouvez afficher un message de connexion ou rediriger vers la page de connexion
 }
+
+  }
 
 export default App;

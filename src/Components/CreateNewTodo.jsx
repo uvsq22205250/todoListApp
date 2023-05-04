@@ -5,10 +5,6 @@ import { Button, Checkbox, FormControlLabel, Grid,
     makeStyles, Paper, Slide, Snackbar, TextField, Typography } from '@material-ui/core'
 
 
-
-
-
-
 function CreateNewTodo(){
     const [showModal, setShowModal] = useState(false) //showModal = false, setShowModal() pour le modifier
     const [text, setText] = useState('') //pour changer la value de l'input

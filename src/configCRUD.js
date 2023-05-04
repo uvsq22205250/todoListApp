@@ -1,13 +1,17 @@
-import { collection, query, doc, getDoc, setDoc, addDoc, getFirestore, deleteDoc, updateDoc } from "firebase/firestore";
+import { collection, query, doc, getDoc, setDoc, addDoc, getFirestore, deleteDoc, updateDoc, where } from "firebase/firestore";
 import app from './firebase.config';
 
 const db = getFirestore(app);
 const Firebase = {
     todos: () => {
-        //return db.collection('todos')
-        return query(collection(db, 'todos'))
+      // Create a query against the collection.
+      //const todos = query(collection(db, 'todos'));
+      //const q = query(todos, where("userId", "==", uid));
+      //console.log(q)
+
+      return query(collection(db, 'todos'))
     },
-    addTodos: async (tache) => {
+    addTodos: async (tache, uid) => {
         //return db.collection('todos').add({ tache })
        // return query(collection(db, 'todos'))
         //return getFirestore.collection('todos').addd({ tache })
@@ -16,7 +20,8 @@ const Firebase = {
           name: tache.name,
           date: tache.date,
           reminder: tache.reminder,
-          completed: tache.completed
+          completed: tache.completed,
+          userId : uid
         });
     },
     updateTodo: async (id, tache) => {

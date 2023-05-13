@@ -16,16 +16,17 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { updateProfile } from "firebase/auth";
+import * as Yup from "yup";
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © AWS - Groupe6'}
+      {"Copyright © AWS - Groupe6"}
       <Link color="inherit" href="https://mui.com/">
         Your Website
-      </Link>{' '}
+      </Link>{" "}
       {new Date().getFullYear()}
-      {'.'}
+      {"."}
     </Typography>
   );
 }
@@ -33,53 +34,83 @@ function Copyright() {
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   },
   avatar: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(3),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  textFieldIsEmpty: {
+    "& label.Mui-focused": {
+      color: "red",
+    },
+    "& .MuiInput-underline:after": {
+      borderBottomColor: "red",
+    },
+    "& .MuiInputLabel-root": {
+      color: "red",
+    },
+    "& .MuiOutlinedInput-input": {
+      color: "red",
+    },
+    "& .MuiOutlinedInput-root": {
+      "& fieldset": {
+        borderColor: "red",
+      },
+      "&:hover fieldset": {
+        borderColor: "red",
+      },
+      "&.Mui-focused fieldset": {
+        borderColor: "red",
+      },
+    },
+  },
 }));
- 
+
 const Signup = () => {
-    const classes = useStyles();
-    const navigate = useNavigate();
- 
-    const [name, setName] = useState('')
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('');
- 
-    const onSubmit = async (e) => {
-      e.preventDefault()
-     
-      await createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            // Signed in
-            const user = userCredential.user;
-            console.log(user);
-            updateProfile(user, {
-              displayName: name
-            })
-            navigate("/Login")
-            // ...
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log(errorCode, errorMessage);
-            // ..
-        });
-    }
- 
+  const classes = useStyles();
+  const navigate = useNavigate();
+
+  const [Lname, setLname] = useState("");
+  const [Fname, setFname] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [textNameFieldIsEmpty, setTextNameFieldIsEmpty] = useState(false);
+  const [textFNameFieldIsEmpty, setTextFNameFieldIsEmpty] = useState(false);
+  const [textMailFieldIsEmpty, setTextMailFieldIsEmpty] = useState(false);
+  const [textFieldIsEmptyMDP, setTextFieldIsEmptyMDP] = useState(false);
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+
+    await createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        /*updateProfile(user, {
+          displayName: name
+        })*/
+        navigate("/Login");
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+        // ..
+        alert("Utilisateur existe deja ! ");
+      });
+  };
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -94,32 +125,59 @@ const Signup = () => {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
+                className={
+                  textFNameFieldIsEmpty ? classes.textFieldIsEmpty : ""
+                }
                 autoComplete="fname"
                 name="firstName"
-                variant="outlined"
+                variant="filled"
                 required
                 fullWidth
                 id="firstName"
                 label="First Name"
                 autoFocus
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => {
+                  setFname(e.target.value);
+                  setTextFNameFieldIsEmpty(e.target.value.trim() === "");
+                }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                className={textNameFieldIsEmpty ? classes.textFieldIsEmpty : ""}
+                variant="filled"
+                required
+                fullWidth
+                id="lastName"
+                label="Last Name"
+                name="lastName"
+                autoComplete="lname"
+                onChange={(e) => {
+                  setLname(e.target.value);
+                  setTextNameFieldIsEmpty(e.target.value.trim() === "");
+                }}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
-                variant="outlined"
+                className={textMailFieldIsEmpty ? classes.textFieldIsEmpty : ""}
+                variant="filled"
                 required
                 fullWidth
                 id="email"
                 label="Email Address"
                 name="email"
                 autoComplete="email"
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  setTextMailFieldIsEmpty(e.target.value.trim() === "");
+                }}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
-                variant="outlined"
+                className={textFieldIsEmptyMDP ? classes.textFieldIsEmpty : ""}
+                variant="filled"
                 required
                 fullWidth
                 name="password"
@@ -127,7 +185,10 @@ const Signup = () => {
                 type="password"
                 id="password"
                 autoComplete="current-password"
-                onChange={(e) => setPassword(e.target.value)} 
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  setTextFieldIsEmptyMDP(e.target.value.trim() === "");
+                }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -149,12 +210,7 @@ const Signup = () => {
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link href="#" variant="body2">
-                Already have an account?
-                <NavLink to="/Login" >
-                    Sign in
-                </NavLink>
-              </Link>
+              <NavLink to="/Login">Already have an account? Sign in</NavLink>
             </Grid>
           </Grid>
         </form>
@@ -163,7 +219,7 @@ const Signup = () => {
         <Copyright />
       </Box>
     </Container>
-  )
-}
- 
-export default Signup
+  );
+};
+
+export default Signup;

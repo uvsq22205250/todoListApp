@@ -1,12 +1,11 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import AppMain from './AppMain';
-import { ThemeProvider } from '@material-ui/styles';
-import { createMuiTheme } from '@material-ui/core';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import AppMain from "./AppMain";
+import { ThemeProvider } from "@material-ui/styles";
+import { createMuiTheme } from "@material-ui/core";
 import { lightBlue, blueGrey, green } from "@material-ui/core/colors";
-import { ProSidebarProvider } from 'react-pro-sidebar';
-
+import { ProSidebarProvider } from "react-pro-sidebar";
 
 const theme = createMuiTheme({
   palette: {
@@ -20,21 +19,21 @@ const theme = createMuiTheme({
     },
     success: {
       main: green[500],
-      light: green[100]
-    }
+      light: green[100],
+    },
   },
   typography: {
-    fontFamily: 'Raleway'
-  }
+    fontFamily: "Raleway",
+  },
 });
 
 ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
-     <ProSidebarProvider>
-       <AppMain />
-     </ProSidebarProvider>
+      <ProSidebarProvider>
+        <AppMain />
+      </ProSidebarProvider>
     </ThemeProvider>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );

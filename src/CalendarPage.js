@@ -52,6 +52,10 @@ function CalendarPage() {
 
     //Style
     const useStyles = makeStyles((theme) => ({
+      container:{
+        maxWidth: '900px',
+        margin: '50px auto',
+      },
       appPaper: {
         padding: theme.spacing(1, 3),
         margin: theme.spacing(6, 0),
@@ -93,8 +97,10 @@ function CalendarPage() {
     return (
       <>
         <ResponsiveAppBar> </ResponsiveAppBar>
+        <div className= {classes.container}>
+          <Calendar Todo={toDos} />
+        </div>
 
-        <Calendar Todo={toDos} />
       </>
     );
   } else {

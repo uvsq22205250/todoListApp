@@ -38,6 +38,7 @@ const pages = [' '];
 const settings = ['Logout'];
 const name = [curUser.email];
 const contacts = [''];
+const accueil = ['Home'];
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -56,10 +57,15 @@ function ResponsiveAppBar() {
       });
   };
 
-    const handleContacts = () => {               
-      navigate("/Dashboard");
-      console.log("Contact successfully")
-    }
+  const handleContacts = () => {               
+    navigate("/Dashboard");
+    console.log("Contact successfully")
+  }
+
+  const handleHome = () => {               
+    navigate("/App");
+    console.log("accueil successfully")
+  }
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -96,7 +102,7 @@ function ResponsiveAppBar() {
             variant="h6"
             noWrap
             component="a"
-            href="/App"
+            href="*"
             sx={{
               mr: 2,
               ml: 2,
@@ -183,14 +189,19 @@ function ResponsiveAppBar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleLogout}>
-                  <Typography textAlign="center">{setting}</Typography>
+              {accueil.map((accueil) => (
+                <MenuItem key={accueil} onClick={handleHome}>
+                  <Typography textAlign="center">{accueil}</Typography>
                 </MenuItem>
               ))}
               {contacts.map((contacts) => (
                 <MenuItem key={contacts} onClick={handleContacts}>
                   <Typography textAlign="center">{contacts}</Typography>
+                </MenuItem>
+              ))}
+              {settings.map((setting) => (
+                <MenuItem key={setting} onClick={handleLogout}>
+                  <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}
             </Menu>

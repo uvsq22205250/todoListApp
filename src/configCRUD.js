@@ -8,6 +8,7 @@ import {
   getFirestore,
   deleteDoc,
   updateDoc,
+  FieldValue,
   where,
 } from "firebase/firestore";
 import app from "./firebase.config";

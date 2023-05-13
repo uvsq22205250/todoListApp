@@ -16,9 +16,28 @@ import logo from '../images/task.png'
 import {  signOut } from "firebase/auth";
 import {auth} from '../firebase.config';
 import { useNavigate } from 'react-router-dom';
+import app from '../firebase.config';
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+
+
+const curUser = '';
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    // User is signed in, see docs for a list of available properties
+    // https://firebase.google.com/docs/reference/js/firebase.User
+    const uid = user.uid;
+    //curUser = user.displayName;
+    // ...
+  } else {
+    // User is signed out
+    // ...
+  }
+});
 
 const pages = [' '];
 const settings = ['Logout'];
+const name = [curUser.email];
+const contacts = ['Contacts'];
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -33,6 +52,11 @@ function ResponsiveAppBar() {
         }).catch((error) => {
         // An error happened.
         });
+    }
+
+    const handleContacts = () => {               
+      navigate("/Dashboard");
+      console.log("Contact successfully")
     }
 
   const handleOpenNavMenu = (event) => {
@@ -138,6 +162,7 @@ function ResponsiveAppBar() {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
+            {name}
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
@@ -162,6 +187,11 @@ function ResponsiveAppBar() {
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleLogout}>
                   <Typography textAlign="center">{setting}</Typography>
+                </MenuItem>
+              ))}
+              {contacts.map((contacts) => (
+                <MenuItem key={contacts} onClick={handleContacts}>
+                  <Typography textAlign="center">{contacts}</Typography>
                 </MenuItem>
               ))}
             </Menu>

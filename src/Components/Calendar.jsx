@@ -3,51 +3,32 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
+import { useEffect } from "react";
 // import "../App.css"; // Import App.css file
 
-function Calendar() {
-    const [events, setEvents] = useState([
-        {
-            title: "Event 1",
-            start: new Date(),
-            allDay: true,
-        },
-        {
-            title: "Event 2",
-            start: new Date(),
-            allDay: true,
-        },
-    ]);
+function Calendar({ Todo }) {
+  const [events, setEvents] = useState([]);
 
-    const handleSelect = (arg) => {
-        const title = prompt("Enter event title:");
-        if (title) {
-            setEvents((prevEvents) => [
-                ...prevEvents,
-                { title, start: arg.start, end: arg.end },
-            ]);
-        }
-    };
+  useEffect(() => {
+    const newEvents = Todo.map((todo) => ({
+      title: todo.name,
+      start: new Date(todo.date),
+      allDay: true,
+    }));
+    setEvents(newEvents);
+  }, [Todo]);
 
-    const handleEventClick = (arg) => {
-        if (window.confirm(`Delete event '${arg.event.title}'?`)) {
-            setEvents((prevEvents) =>
-                prevEvents.filter((event) => event !== arg.event)
-            );
-        }
-    };
+  console.log("EVENTS  " + events);
 
-    return (
-        <FullCalendar
-            plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-            initialView="dayGridMonth"
-            events={events}
-            editable={true}
-            selectable={true}
-            select={handleSelect}
-            eventClick={handleEventClick}
-        />
-    );
+  return (
+    <FullCalendar
+      plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+      initialView="dayGridMonth"
+      events={events}
+      editable={true}
+      selectable={true}
+    />
+  );
 }
 
 export default Calendar;

@@ -37,7 +37,7 @@ onAuthStateChanged(auth, (user) => {
 const pages = [' '];
 const settings = ['Logout'];
 const name = [curUser.email];
-const contacts = ['Contacts'];
+const contacts = [''];
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);

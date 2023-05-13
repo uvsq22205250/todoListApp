@@ -6,7 +6,6 @@ import {
 } from "firebase/auth";
 import { auth } from "./firebase.config";
 import { NavLink, useNavigate } from "react-router-dom";
-
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -22,7 +21,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import db from './configCRUD';
 import * as Yup from "yup";
-import { aU } from "@fullcalendar/core/internal-common";
+//import { aU } from "@fullcalendar/core/internal-common";
 
 function Copyright() {
   return (

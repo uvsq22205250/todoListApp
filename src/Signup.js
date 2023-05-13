@@ -80,7 +80,7 @@ const Signup = () => {
   const classes = useStyles();
   const navigate = useNavigate();
 
-  const [Lname, setLname] = useState("");
+  const [name, setLname] = useState("");
   const [Fname, setFname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -96,9 +96,9 @@ const Signup = () => {
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
-        /*updateProfile(user, {
+        updateProfile(user, {
           displayName: name
-        })*/
+        })
         navigate("/Login");
         // ...
       })

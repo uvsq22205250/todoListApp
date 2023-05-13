@@ -4,18 +4,12 @@ import app from './firebase.config';
 const db = getFirestore(app);
 const Firebase = {
     todos: () => {
-      // Create a query against the collection.
-      //const todos = query(collection(db, 'todos'));
-      //const q = query(todos, where("userId", "==", uid));
-      //console.log(q)
+      
 
       return query(collection(db, 'todos'))
     },
     addTodos: async (tache, uid) => {
-        //return db.collection('todos').add({ tache })
-       // return query(collection(db, 'todos'))
-        //return getFirestore.collection('todos').addd({ tache })
-        // Add a new document in collection "cities"
+        
         return await addDoc(collection(db, 'todos'), { 
           name: tache.name,
           date: tache.date,
@@ -30,7 +24,6 @@ const Firebase = {
       return await updateDoc(todo, updateFields);
     },
     deleteTodo: async (id) => {
-      //const todo = getDoc(collection(db, 'todos', id))
       const todo = doc(db, 'todos', id)
       return await deleteDoc(todo);
     },

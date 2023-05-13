@@ -22,31 +22,9 @@ function App() {
       const email = user.email;
       // etc...
 
- /*
-  const [currentUser, setCurrentUser] = useState(null);
+ 
 
-  const auth = getAuth();
-  const user = auth.currentUser
-  console.log(user)
-  setCurrentUser(user);
-
-  
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        setCurrentUser(user);
-      } else {
-        setCurrentUser(null);
-      }
-    });
-    //return unsubscribe;
-    unsubscribe();
-  }, []);
-  
-  */
-
-  // Afficher les informations de l'utilisateur actuellement connecté
-  //const { uid, email } = currentUser;
+ 
 
   const [openEdit, setOpenEdit] = useState(false)
   const [editValue, setEditValue] = useState('')
@@ -67,28 +45,7 @@ function App() {
 
   const [loading, setLoading] = useState(true)
 
-  /*
-  const fetchTasks = async() => {
-    const response = query(collection(db, "task"));
-    const data = await getDocs(response);
-    
-    if (data.size>0) {
-      data.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        console.log(doc.id, " => ", doc.data());
-        setTodo([...Todo, doc.data()])
-      });
-
-    } else {
-      // docSnap.data() will be undefined in this case
-      console.log("No such document!");
-    }
-  }
-  useEffect(() => {
-    fetchTasks();
-  }, [])
-  */
-
+ 
   useEffect(() => {
     const loadTodos = () => onSnapshot(db.todos(), (query) => {
         const list = []

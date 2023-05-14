@@ -61,7 +61,7 @@ class NewChat extends React.Component {
     const loadUsers = () =>
       onSnapshot(db.users(), (query) => {
         query.forEach(doc => {
-          users.push(doc.data()); 
+          users.push(doc.data().email); 
         })
     });
     loadUsers();

@@ -24,7 +24,7 @@ function App() {
   const { user } = UserAuth();
   const verif = () => { if (user == null)  {
     console.log("Echec auth");
-    return <h1></h1>;
+    return <h1> Erreur </h1>;
     // L'utilisateur n'est pas connecté, vous pouvez afficher un message de connexion ou rediriger vers la page de connexion
   }}
   verif();

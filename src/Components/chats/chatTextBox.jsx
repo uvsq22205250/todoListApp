@@ -4,8 +4,6 @@ import Send from "@material-ui/icons/Send";
 import styles from "../../styles/chatTextBox";
 import { withStyles } from "@material-ui/core/styles";
 import db from '../../configCRUD';
-import app from '../../firebase.config';
-import { getAuth } from "firebase/auth";
 
 class ChatTextBox extends React.Component {
   

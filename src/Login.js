@@ -19,7 +19,6 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import db from './configCRUD';
 import * as Yup from "yup";
 //import { aU } from "@fullcalendar/core/internal-common";
 
@@ -102,13 +101,19 @@ const Login = () => {
     e.preventDefault();
     setPersistence(auth, browserSessionPersistence)
       .then(() => {
-        return signInWithEmailAndPassword(auth, email, password);
-      })
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        db.addUser(email);
-        navigate("/App");
+        //const user = userCredential.user;
+        signInWithEmailAndPassword(auth, email, password)
+        . then ( ( userCredential )  =>  {
+          // Connecté
+          const  user  =  userCredential.user ;
+          navigate("/App")
+        } )
+        . catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(errorCode, errorMessage);
+        }) ;
+          //navigate("/App");
       })
       .catch((error) => {
         const errorCode = error.code;

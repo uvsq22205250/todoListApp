@@ -18,7 +18,6 @@ import app from "./firebase.config";
 import { getAuth } from "firebase/auth";
 import { NavLink, useNavigate } from "react-router-dom";
 import { UserAuth } from "./UserContext";
-import Cookies from "js-cookie";
 
 function App() {
 
@@ -28,6 +27,9 @@ function App() {
     return <h1></h1>;
     // L'utilisateur n'est pas connecté, vous pouvez afficher un message de connexion ou rediriger vers la page de connexion
   }}
+  verif();
+
+  console.log(user)
 
   //const auth = getAuth(app);
   //const user = auth.currentUser;

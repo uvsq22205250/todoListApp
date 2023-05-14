@@ -23,6 +23,7 @@ function CalendarPage() {
   return <h1></h1>;
   // L'utilisateur n'est pas connecté, vous pouvez afficher un message de connexion ou rediriger vers la page de connexion
   }}
+  verif();
 
   const uid = user.uid;
   const email = user.email;

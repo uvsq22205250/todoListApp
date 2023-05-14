@@ -18,29 +18,18 @@ import {auth} from '../firebase.config';
 import { useNavigate } from 'react-router-dom';
 import app from '../firebase.config';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { UserAuth } from "../UserContext";
 
-
-const curUser = '';
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    // User is signed in, see docs for a list of available properties
-    // https://firebase.google.com/docs/reference/js/firebase.User
-    const uid = user.uid;
-    //curUser = user.displayName;
-    // ...
-  } else {
-    // User is signed out
-    // ...
-  }
-});
 
 const pages = [' '];
 const settings = ['Logout'];
-const name = [curUser.email];
-const contacts = [''];
+const contacts = ['Contacts'];
 const accueil = ['Home'];
 
 function ResponsiveAppBar() {
+  const { user } = UserAuth();
+  const name = [user.displayName];
+
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const navigate = useNavigate();
@@ -102,7 +91,7 @@ function ResponsiveAppBar() {
             variant="h6"
             noWrap
             component="a"
-            href="*"
+            onClick={handleHome}
             sx={{
               mr: 2,
               ml: 2,
@@ -167,10 +156,14 @@ function ResponsiveAppBar() {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            {name}
+            {name.toString().toUpperCase()}
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar alt="Remy Sharp">
+                  {name.toString()
+                    .split("")[0]
+                    .toUpperCase()}
+                </Avatar>
               </IconButton>
             </Tooltip>
             <Menu

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useEffect } from "react";
 import Inbox from "./inbox";
 import styles from "../../styles/dashboard";
 import { withStyles } from "@material-ui/core/styles";
@@ -7,15 +7,15 @@ import AddIcon from "@material-ui/icons/Add";
 import ChatView from "./chatView";
 import ChatTextBox from "./chatTextBox";
 import NewChat from "./newChat";
-import app from '../../firebase.config';
 import db from '../../configCRUD';
-import { getAuth } from "firebase/auth";
-
-
-const auth = getAuth(app);
-const currentuser = auth.currentUser;
+import { UserAuth } from "../../UserContext";
+import { onSnapshot } from "firebase/firestore";
+import IconButton from '@mui/material/IconButton';
+import Avatar from '@mui/material/Avatar';
+import { useNavigate } from 'react-router-dom';
 
 class Dashboard extends Component {
+  
   constructor() {
     super();
     this.state = {
@@ -26,16 +26,25 @@ class Dashboard extends Component {
     };
   }
 
-  getChats = async () => {
-    if (currentuser !== null) {
-      const chats = db.chats(currentuser.email);
-      this.setState({
-        email: currentuser.email,
-        chats: chats,
-        });
-    };  
+  getChats = () => {
+    const chats = [];
+      //const chats = [];
+    //const user = "mail";
+    const loadChats = () =>
+    onSnapshot(db.chats(), (query) => {
+      query.forEach(doc => {
+        const chat = doc.data();
+        if(chat.messages.includes(UserAuth.email)){
+          chats.push(chat);
+        }
+      })
+    });
+    loadChats();
+    this.setState({
+      email: UserAuth.email,
+      chats: chats,
+    });  
   };
-
 
   componentDidMount() {
     this.getChats();
@@ -66,12 +75,18 @@ class Dashboard extends Component {
     this.setState({ newChatFormVisible: true, selectedChatIndex: null });
   };
 
+  handleBack = () => {
+    const navigate = useNavigate();
+    navigate("/App");
+  }
+
   render() {
     const { classes } = this.props;
+    const back = "<-";
     return (
       <div>
         <div className={classes.header}>
-          <div className={classes.textHeader}>Chat App</div>
+          <div className={classes.textHeader} onClick={this.handleBack}>Chat App</div>
         </div>
         <Inbox
           history={this.props.history}

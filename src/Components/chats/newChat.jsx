@@ -3,12 +3,8 @@ import { Paper, withStyles, CssBaseline, Typography } from "@material-ui/core";
 import styles from "../../styles/newChat";
 import UserForm from "./common/userForm";
 import db from '../../configCRUD';
-import app from '../../firebase.config';
-import { getAuth } from "firebase/auth";
 import { onSnapshot } from "firebase/firestore";
-
-const auth = getAuth(app);
-const currentuser = auth.currentUser;
+import { UserAuth } from "../../UserContext";
 
 class NewChat extends React.Component {
   constructor() {
@@ -21,7 +17,7 @@ class NewChat extends React.Component {
 
   handleOnSubmit = async (e) => {
     e.preventDefault();
-    const userExists = await this.usersExists();
+    const userExists = this.usersExists();
     if (!userExists) {
       this.setState({ newChatrror: "Email does not exists" });
       return;
@@ -32,7 +28,7 @@ class NewChat extends React.Component {
 
   createChat = async () => {
     const docKey = this.buildDocKey();
-    db.addChat(docKey, currentuser.email, this.state.email)
+    db.addChat(docKey, UserAuth().email, this.state.email)
     this.goToChat();
   };
 
@@ -45,7 +41,7 @@ class NewChat extends React.Component {
   };
 
   buildDocKey = () => {
-    return [currentuser.email, this.state.email]
+    return [UserAuth().email, this.state.email]
       .sort()
       .join(":");
   };
@@ -57,18 +53,21 @@ class NewChat extends React.Component {
   };
 
   usersExists = () => {
-    if (currentuser.email === this.state.email) {
+    if (UserAuth().email === this.state.email) {
       this.setState({ newChatrror: "Enter others Email" });
       return;
     }
-    const exists = '';
-    onSnapshot(db.users(), (query) => {
-      query.forEach(doc => {
-        const  exists  = (doc.data().email).includes(this.state.email);  
-      })
+    const users = [];
+    const loadUsers = () =>
+      onSnapshot(db.users(), (query) => {
+        query.forEach(doc => {
+          users.push(doc.data()); 
+        })
     });
+    loadUsers();
+    const exists = users.includes(this.state.email);
     return exists;
-  };
+  }
 
   handleOnChange = (type, e) => {
     const val = e.target.value;

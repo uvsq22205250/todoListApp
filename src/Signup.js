@@ -16,6 +16,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { updateProfile } from "firebase/auth";
+import db from './configCRUD';
 import * as Yup from "yup";
 
 function Copyright() {
@@ -99,6 +100,7 @@ const Signup = () => {
         updateProfile(user, {
           displayName: name
         })
+        db.addUser(email);
         navigate("/Login");
         // ...
       })

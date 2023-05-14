@@ -18,8 +18,8 @@ const Firebase = {
   todos: () => {
     return query(collection(db, 'todos'));
   },
-  chats: (email) => {
-    return query(collection(db, "chats",  where("users", "array-contains", email)));
+  chats: () => {
+    return query(collection(db, "chats"));
   },
   chat: (id) => {
     return query(collection(db, "chats", id));
